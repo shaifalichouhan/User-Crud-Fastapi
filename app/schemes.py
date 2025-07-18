@@ -12,4 +12,8 @@ class userout(BaseModel):
     last_name: str
     email: str
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
 model_config = ConfigDict(from_attributes=True)

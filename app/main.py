@@ -61,3 +61,15 @@ def update_user(user_id: int, updated_data: schemes.UserCreat, db: Session = Dep
     db.commit()
     db.refresh(user)
     return user
+
+@app.post("/login")
+def login(user: schemes.UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(model.User).filter(model.User.email == user.email).first()
+
+    if not db_user:
+        raise HTTPException(status_code=400, detail="Invalid email")
+
+    if not bcrypt.verify(user.password, db_user.password):
+        raise HTTPException(status_code=400, detail="Incorrect password")
+
+    return {"message": f"Welcome {db_user.first_name}!"}

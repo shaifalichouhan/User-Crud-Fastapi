@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-sqlalchemy
-pydantic
-passlib[bcrypt]
-alembic
-bcrypt

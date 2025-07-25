@@ -1,5 +1,11 @@
 from sqlalchemy import Column, Integer, String
 from app.database import Base
+import enum
+from sqlalchemy import Enum
+    
+class UserTypeEnum(str, enum.Enum):
+    admin = "admin"
+    normal = "normal"
 
 class User(Base):
     __tablename__ = "users"
@@ -9,3 +15,4 @@ class User(Base):
     last_name = Column(String)
     email = Column(String, unique=True, index=True)
     password = Column(String)
+    user_type = Column(Enum(UserTypeEnum), default="normal")

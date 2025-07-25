@@ -15,6 +15,12 @@ class ProductOut(BaseModel):
     description: str
     image: str
     price: float
+    
+class ProductUpdate(ProductBase):
+    pass
+
+class Product(ProductBase):
+    id: int
 
     class Config:
         orm_mode = True

@@ -5,3 +5,4 @@ pydantic
 passlib[bcrypt]
 alembic
 bcrypt
+python-jose[cryptography]

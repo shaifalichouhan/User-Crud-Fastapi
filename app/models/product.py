@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float
 from app.database import Base
+import stripe
+
 
 class Product(Base):
     __tablename__ = "products"

@@ -6,3 +6,5 @@ passlib[bcrypt]
 alembic
 bcrypt
 python-jose[cryptography]
+stripe
+python-dotenv

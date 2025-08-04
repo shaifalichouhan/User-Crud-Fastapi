@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.routers import user as user_router
 from app.routers import product as product_router  
+from app.routers import stripe_webhook as stripe_router
 from fastapi.openapi.utils import get_openapi
 
 app = FastAPI()
@@ -8,6 +9,7 @@ app = FastAPI()
 
 app.include_router(user_router.router)
 app.include_router(product_router.router)
+app.include_router(stripe_router.router)
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema

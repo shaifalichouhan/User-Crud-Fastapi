@@ -21,8 +21,8 @@ def create_checkout_session(product_name: str, product_price: int, currency="usd
                 },
             ],
             mode="payment",
-            success_url="https://example.com/success",
-            cancel_url="https://example.com/cancel",
+            success_url="https://localhost:8000/docs",
+            cancel_url="https://localhost:8000/docs",
         )
         return session.url
     except Exception as e:

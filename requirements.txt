@@ -8,3 +8,7 @@ bcrypt
 python-jose[cryptography]
 stripe
 python-dotenv
+xhtml2pdf
+secure-smtplib
+sendgrid
+

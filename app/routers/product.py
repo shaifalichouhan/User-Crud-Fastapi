@@ -31,7 +31,7 @@ def get_product(product_id: int, db: Session = Depends(get_db), current_user: Us
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
-# Create product (only admin)
+# Create product (admin)
 @router.post("/", response_model=schemas.Product)
 def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db), current_user: User = Depends(is_admin_user)):
     db_product = models.Product(**product.dict())

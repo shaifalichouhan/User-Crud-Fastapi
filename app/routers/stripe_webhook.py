@@ -67,11 +67,11 @@ async def stripe_webhook(request: Request):
             print("Customer email:", customer_email)
             print("Amount paid:", amount_paid)
 
-            # Generate PDF
+            # PDF Generate 
             pdf_path = generate_invoice_pdf(session["id"], amount_paid)
             print("PDF generated at:", pdf_path)
 
-            # Send Email
+            # Email send
             send_invoice_email(
                 to_email=customer_email or "test@example.com",
                 subject="Invoice - Payment Successful",

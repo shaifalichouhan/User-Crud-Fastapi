@@ -12,4 +12,9 @@ python-dotenv
 xhtml2pdf
 secure-smtplib
 sendgrid
-
+python-multipart
+pytest
+pytest-cov
+httpx
+pytest-asyncio
+pytest-mock

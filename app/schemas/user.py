@@ -23,7 +23,7 @@ class UserOut(BaseModel):
     user_type: UserType
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserLogin(BaseModel):
@@ -45,7 +45,7 @@ class ProductOut(ProductBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 #Login Functionality
 class Token(BaseModel):

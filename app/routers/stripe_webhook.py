@@ -4,8 +4,9 @@ from app.database import get_db
 from app.config import STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
 from app.models.product import Product as DBProduct
 import stripe
-from app.utils.email import send_invoice_email
+from app.utils.email_utils import send_invoice_email
 from app.utils.pdf_generator import generate_invoice_pdf
+import os
 
 router = APIRouter(
     prefix="/products",
@@ -13,6 +14,8 @@ router = APIRouter(
 )
 
 stripe.api_key = STRIPE_SECRET_KEY
+
+
 @router.post("/checkout-session/{product_id}")
 def checkout_session(product_id: int, db: Session = Depends(get_db)):
     product = db.query(DBProduct).filter(DBProduct.id == product_id).first()
@@ -30,7 +33,7 @@ def checkout_session(product_id: int, db: Session = Depends(get_db)):
                             'name': product.name,
                             'description': product.description,
                         },
-                        'unit_amount': int(product.price * 100),  
+                        'unit_amount': int(product.price * 100),
                     },
                     'quantity': 1,
                 },
@@ -43,7 +46,7 @@ def checkout_session(product_id: int, db: Session = Depends(get_db)):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 
 @router.post("/webhook")
 async def stripe_webhook(request: Request):
@@ -67,9 +70,15 @@ async def stripe_webhook(request: Request):
             print("Customer email:", customer_email)
             print("Amount paid:", amount_paid)
 
-            # PDF Generate 
+            # PDF Generate with debug logs
+            print("Starting PDF generation...")
             pdf_path = generate_invoice_pdf(session["id"], amount_paid)
-            print("PDF generated at:", pdf_path)
+            print(f"PDF path returned: {pdf_path}")
+
+            if pdf_path and os.path.exists(pdf_path):
+                print("PDF file exists and is ready to attach.")
+            else:
+                print("PDF file does NOT exist or path is empty.")
 
             # Email send
             send_invoice_email(
